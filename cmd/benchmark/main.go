@@ -6,11 +6,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/benchmark"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/redis"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/reporter"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/serializers"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/benchmark"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/redis"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/reporter"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/serializers"
 )
 
 func main() {

@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/serializers"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/serializers"
 )
 
 // Client wraps Redis client with benchmark functionality

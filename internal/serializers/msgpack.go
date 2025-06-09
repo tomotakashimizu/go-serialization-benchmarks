@@ -1,7 +1,7 @@
 package serializers
 
 import (
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
 	"github.com/vmihailenco/msgpack/v5"
 )
 

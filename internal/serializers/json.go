@@ -3,7 +3,7 @@ package serializers
 import (
 	"encoding/json"
 
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
 )
 
 // JSONSerializer implements Serializer interface for JSON

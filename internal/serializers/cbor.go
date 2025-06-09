@@ -2,7 +2,7 @@ package serializers
 
 import (
 	"github.com/fxamacker/cbor/v2"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
 )
 
 // CBORSerializer implements Serializer interface for CBOR

@@ -1,4 +1,4 @@
-# Serializer Performance Benchmark
+# Go Serialization Benchmarks
 
 Redis キャッシュのパフォーマンス改善のためのシリアライザー比較ツール
 
@@ -32,7 +32,7 @@ Redis キャッシュのパフォーマンス改善のためのシリアライ�
 ## プロジェクト構造
 
 ```
-benchmarks/serializer/
+go-serialization-benchmarks/
 ├── go.mod                          # Go モジュール設定
 ├── cmd/
 │   └── benchmark/
@@ -66,7 +66,7 @@ benchmarks/serializer/
 ### 依存関係のインストール
 
 ```bash
-cd benchmarks/serializer
+cd go-serialization-benchmarks
 go mod tidy
 ```
 

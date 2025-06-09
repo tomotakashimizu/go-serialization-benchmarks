@@ -6,8 +6,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/serializers"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/serializers"
 )
 
 // Runner handles the execution of serialization benchmarks

@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/redis"
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/serializers"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/redis"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/serializers"
 )
 
 // Reporter handles reporting of benchmark results

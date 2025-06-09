@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/gob"
 
-	"github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
 )
 
 // GobSerializer implements Serializer interface for Gob

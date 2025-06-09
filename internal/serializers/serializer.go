@@ -1,6 +1,6 @@
 package serializers
 
-import "github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer/internal/models"
+import "github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
 
 // Serializer defines the interface for serialization operations
 type Serializer interface {

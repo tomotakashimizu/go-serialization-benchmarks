@@ -1,4 +1,4 @@
-module github.com/tomotakashimizu/performance-testing-toolkit/benchmarks/serializer
+module github.com/tomotakashimizu/go-serialization-benchmarks
 
 go 1.24.2
 
