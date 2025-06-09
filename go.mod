@@ -3,7 +3,7 @@ module github.com/tomotakashimizu/go-serialization-benchmarks
 go 1.24.2
 
 require (
-	github.com/fxamacker/cbor/v2 v2.7.0
+	github.com/fxamacker/cbor/v2 v2.8.0
 	github.com/redis/go-redis/v9 v9.10.0
 	github.com/vmihailenco/msgpack/v5 v5.4.1
 )
