@@ -54,11 +54,11 @@ func main() {
 	runner := benchmark.NewRunner()
 	runner.SetTestData(users)
 
-	// Add all serializers
-	runner.AddSerializer(serializers.NewJSONSerializer())
-	runner.AddSerializer(serializers.NewMsgPackSerializer())
+	// Add all serializers (JSON first, then alphabetical order)
+	runner.AddSerializer(serializers.NewJSONSerializer()) // Most common format first
 	runner.AddSerializer(serializers.NewCBORSerializer())
 	runner.AddSerializer(serializers.NewGobSerializer())
+	runner.AddSerializer(serializers.NewMsgPackSerializer())
 
 	// Run serialization benchmarks
 	fmt.Println("Running serialization benchmarks...")
@@ -102,12 +102,12 @@ func main() {
 			}
 
 			// Use all users for Redis benchmarks
-			// Create serializers for Redis test
+			// Create serializers for Redis test (JSON first, then alphabetical order)
 			redisSerializers := []serializers.Serializer{
-				serializers.NewJSONSerializer(),
-				serializers.NewMsgPackSerializer(),
+				serializers.NewJSONSerializer(), // Most common format first
 				serializers.NewCBORSerializer(),
 				serializers.NewGobSerializer(),
+				serializers.NewMsgPackSerializer(),
 			}
 
 			redisResults, err := redisClient.BenchmarkRedisOperations(redisSerializers, users, *iterations)

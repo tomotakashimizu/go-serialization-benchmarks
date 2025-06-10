@@ -13,9 +13,9 @@ Go 言語における各種シリアライゼーション形式のパフォー�
 ## 対応シリアライザー
 
 - **JSON** - Go 標準ライブラリ ([`encoding/json`](https://pkg.go.dev/encoding/json))
-- **MessagePack** - [`github.com/vmihailenco/msgpack/v5`](https://github.com/vmihailenco/msgpack)
 - **CBOR** - [`github.com/fxamacker/cbor/v2`](https://github.com/fxamacker/cbor)
 - **Gob** - Go 標準ライブラリ ([`encoding/gob`](https://pkg.go.dev/encoding/gob))
+- **MessagePack** - [`github.com/vmihailenco/msgpack/v5`](https://github.com/vmihailenco/msgpack)
 
 ## 測定項目
 
@@ -52,9 +52,9 @@ go-serialization-benchmarks/
 │   │   └── reporter.go            # 結果出力・保存
 │   └── serializers/
 │       ├── serializer.go          # 共通インターフェース
+│       ├── json.go                # JSON実装
 │       ├── cbor.go                # CBOR実装
 │       ├── gob.go                 # Gob実装
-│       ├── json.go                # JSON実装
 │       └── msgpack.go             # MessagePack実装
 ├── results/                        # 結果出力先
 ├── go.mod                          # Go モジュール設定
