@@ -137,9 +137,9 @@ func showHelp() {
 	fmt.Printf("=====================================\n\n")
 	fmt.Printf("This tool compares the performance of different serialization formats:\n")
 	fmt.Printf("- JSON (standard library)\n")
-	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n")
 	fmt.Printf("- CBOR (github.com/fxamacker/cbor/v2)\n")
-	fmt.Printf("- Gob (standard library)\n\n")
+	fmt.Printf("- Gob (standard library)\n")
+	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n\n")
 
 	fmt.Printf("The benchmark measures:\n")
 	fmt.Printf("1. Serialization/deserialization speed (average & median)\n")
