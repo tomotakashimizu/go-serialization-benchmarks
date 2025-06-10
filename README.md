@@ -1,76 +1,77 @@
 # Go Serialization Benchmarks
 
-Redis キャッシュのパフォーマンス改善のためのシリアライザー比較ツール
+Go 言語における各種シリアライゼーション形式のパフォーマンス比較ツールです。
 
 ## 概要
 
-このツールは、JSON→ ドメインモデルの Unmarshal が Redis キャッシュ復元時のボトルネックとなっている問題を解決するため、異なるシリアライゼーション形式のパフォーマンスを比較します。
+このプロジェクトは、異なるシリアライゼーション形式のパフォーマンスを測定・比較するためのベンチマークツールです。特に以下の用途に適しています：
 
-## 比較対象のシリアライザー
+- アプリケーションに最適なシリアライゼーション形式の選択
+- データ永続化や API 通信における性能最適化
+- Redis キャッシュなどでのシリアライゼーション性能評価
 
-- **JSON** - Go 標準ライブラリ (`encoding/json`)
-- **MessagePack** - `github.com/vmihailenco/msgpack/v5`
-- **CBOR** - `github.com/fxamacker/cbor/v2`
-- **Gob** - Go 標準ライブラリ (`encoding/gob`)
+## 対応シリアライザー
+
+- **JSON** - Go 標準ライブラリ ([`encoding/json`](https://pkg.go.dev/encoding/json))
+- **MessagePack** - [`github.com/vmihailenco/msgpack/v5`](https://github.com/vmihailenco/msgpack)
+- **CBOR** - [`github.com/fxamacker/cbor/v2`](https://github.com/fxamacker/cbor)
+- **Gob** - Go 標準ライブラリ ([`encoding/gob`](https://pkg.go.dev/encoding/gob))
 
 ## 測定項目
 
 ### 1. シリアライゼーション性能
 
-- Marshal/Unmarshal 速度（平均・中央値）
-- データサイズ（バイト数）
+- Marshal/Unmarshal 速度（平均値・中央値）
+- シリアライズ後のデータサイズ
 
-### 2. 対称性テスト
+### 2. Marshal/Unmarshal の対称性テスト
 
 - 空スライス/マップの Marshal→Unmarshal 対称性
 - nil スライス/マップの Marshal→Unmarshal 対称性
 
-### 3. Redis 性能 (オプション)
+### 3. Redis 性能測定（オプション）
 
 - Redis SET/GET 操作の性能測定
+- 実際のキャッシュ使用シナリオでの評価
 
 ## プロジェクト構造
 
 ```
 go-serialization-benchmarks/
-├── go.mod                          # Go モジュール設定
 ├── cmd/
 │   └── benchmark/
 │       └── main.go                 # 実行エントリーポイント
 ├── internal/
-│   ├── models/
-│   │   └── test_data.go           # テストデータ構造体
-│   ├── serializers/
-│   │   ├── serializer.go          # 共通インターフェース
-│   │   ├── json.go                # JSON実装
-│   │   ├── msgpack.go             # MessagePack実装
-│   │   ├── cbor.go                # CBOR実装
-│   │   └── gob.go                 # Gob実装
 │   ├── benchmark/
 │   │   └── runner.go              # ベンチマーク実行ロジック
+│   ├── models/
+│   │   └── test_data.go           # テストデータ構造体
 │   ├── redis/
 │   │   └── client.go              # Redis性能測定
-│   └── reporter/
-│       └── reporter.go            # 結果出力・保存
+│   ├── reporter/
+│   │   └── reporter.go            # 結果出力・保存
+│   └── serializers/
+│       ├── serializer.go          # 共通インターフェース
+│       ├── cbor.go                # CBOR実装
+│       ├── gob.go                 # Gob実装
+│       ├── json.go                # JSON実装
+│       └── msgpack.go             # MessagePack実装
 ├── results/                        # 結果出力先
+├── go.mod                          # Go モジュール設定
 └── README.md                       # このファイル
 ```
 
-## 使用方法
-
-### 前提条件
-
-- Go 1.24.2 以上
-- Redis（Redis 性能測定を行う場合）
-
-### 依存関係のインストール
+## インストール
 
 ```bash
+git clone https://github.com/tomotakashimizu/go-serialization-benchmarks.git
 cd go-serialization-benchmarks
 go mod tidy
 ```
 
-### 基本的な使用方法
+## 使用方法
+
+### 基本実行
 
 ```bash
 # デフォルト設定で実行（10万件データ、5回測定）
@@ -86,9 +87,9 @@ go run cmd/benchmark/main.go -skip-redis
 go run cmd/benchmark/main.go -help
 ```
 
-### コマンドラインオプション
+### コマンドライン引数
 
-| オプション        | デフォルト     | 説明                     |
+| 引数              | デフォルト     | 説明                     |
 | ----------------- | -------------- | ------------------------ |
 | `-count`          | 100000         | 生成するテストレコード数 |
 | `-iterations`     | 5              | ベンチマーク測定回数     |
@@ -105,42 +106,16 @@ go run cmd/benchmark/main.go -help
 # 小規模テスト（1万件、Redis無し）
 go run cmd/benchmark/main.go -count=10000 -skip-redis
 
-# カスタムRedis設定
+# カスタムRedis設定での実行
 go run cmd/benchmark/main.go -redis-addr=192.168.1.100:6379 -redis-password=secret
 
-# 高精度測定（10回測定）
+# 10回測定
 go run cmd/benchmark/main.go -iterations=10
 ```
 
-## 結果出力
+## テストデータ
 
-### コンソール出力
-
-実行時に以下の表が表示されます：
-
-1. **シリアライゼーション性能結果**
-
-   - データサイズ（バイト）
-   - Marshal/Unmarshal 速度（マイクロ秒）
-
-2. **対称性テスト結果**
-
-   - 空/nil スライス・マップの処理結果
-
-3. **Redis 性能結果**（Redis 測定を行った場合）
-   - SET/GET 操作速度（マイクロ秒）
-
-### ファイル出力
-
-`results/` ディレクトリに以下の CSV ファイルが保存されます：
-
-- `serialization_results_YYYYMMDD_HHMMSS.csv` - シリアライゼーション性能
-- `symmetry_results_YYYYMMDD_HHMMSS.csv` - 対称性テスト結果
-- `redis_results_YYYYMMDD_HHMMSS.csv` - Redis 性能（実行した場合）
-
-## テストデータ構造
-
-約 10 フィールドの 3 層ネスト構造を持つ User モデル：
+4 層ネスト構造を持つ User モデルを使用：
 
 ```go
 type User struct {
@@ -149,64 +124,54 @@ type User struct {
     Email     string
     Age       int
     IsActive  bool
-    Profile   Profile      // 2層目
-    Settings  Settings     // 2層目
+    Profile   Profile                // 2層目
+    Settings  Settings               // 2層目
     Tags      []string
     Metadata  map[string]interface{}
     CreatedAt time.Time
 }
 
 type Profile struct {
-    // ... 3層目までのネスト構造
+    FirstName   string
+    LastName    string
+    Bio         string
+    Avatar      string
+    SocialLinks []Link             // 3層目
+    Preferences Preferences        // 3層目
+}
+
+type Preferences struct {
+    Theme         string
+    Language      string
+    Notifications map[string]bool
+    Privacy       PrivacySettings  // 4層目
 }
 ```
 
-## Redis 測定について
+複雑なネスト構造により、実際のアプリケーションデータに近い条件でのベンチマークが可能です。
 
-Redis 測定では以下を行います：
+## 結果出力
 
-1. シリアライズしたデータの Redis SET 操作
-2. Redis GET 操作とデシリアライズ
-3. データ整合性チェック
-4. 測定完了後のキークリーンアップ
+### コンソール出力
 
-Redis 接続に失敗した場合は警告を表示してスキップします。
+実行時に以下の情報がテーブル形式で表示されます：
 
-## トラブルシューティング
+1. **シリアライゼーション性能結果**
 
-### 依存関係エラー
+   - データサイズ（バイト）
+   - Marshal/Unmarshal 速度
 
-```bash
-# 依存関係を再取得
-go mod download
-go mod tidy
-```
+2. **Marshal/Unmarshal の対称性テスト結果**
 
-### Redis 接続エラー
+   - 空/nil スライス・マップの処理結果
 
-```bash
-# Redisサーバーの起動確認
-redis-cli ping
+3. **Redis 性能結果**（Redis 測定を行った場合）
+   - SET/GET 操作速度
 
-# Redis測定をスキップ
-go run cmd/benchmark/main.go -skip-redis
-```
+### ファイル出力
 
-### メモリ不足
+`results/` ディレクトリに以下の CSV ファイルが保存されます：
 
-大量のテストデータ生成時にメモリ不足が発生する場合：
-
-```bash
-# レコード数を減らす
-go run cmd/benchmark/main.go -count=10000
-```
-
-## パフォーマンス期待値
-
-一般的な傾向：
-
-- **速度**: Gob > MessagePack > CBOR > JSON
-- **サイズ**: MessagePack ≈ CBOR < Gob < JSON
-- **対称性**: Go 標準ライブラリの方が一貫性が高い傾向
-
-※実際の結果は環境により異なります。
+- `serialization_results_YYYYMMDD_HHMMSS.csv` - シリアライゼーション性能
+- `symmetry_results_YYYYMMDD_HHMMSS.csv` - Marshal/Unmarshal の対称性テスト結果
+- `redis_results_YYYYMMDD_HHMMSS.csv` - Redis 性能（実行した場合）
