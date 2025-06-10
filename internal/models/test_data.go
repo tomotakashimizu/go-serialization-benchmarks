@@ -62,7 +62,6 @@ type Settings struct {
 // GenerateTestUsers generates a specified number of test users
 func GenerateTestUsers(count int) []User {
 	users := make([]User, count)
-	rand.Seed(time.Now().UnixNano())
 
 	platforms := []string{"Twitter", "GitHub", "LinkedIn", "Instagram", "Facebook"}
 	themes := []string{"dark", "light", "auto", "contrast"}
