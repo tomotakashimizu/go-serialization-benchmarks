@@ -3,7 +3,7 @@ package benchmark
 import (
 	"fmt"
 	"reflect"
-	"sort"
+	"slices"
 	"time"
 
 	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
@@ -353,9 +353,7 @@ func calculateMedian(values []int64) int64 {
 	// Create a copy to avoid modifying the original slice
 	sorted := make([]int64, len(values))
 	copy(sorted, values)
-	sort.Slice(sorted, func(i, j int) bool {
-		return sorted[i] < sorted[j]
-	})
+	slices.Sort(sorted)
 
 	n := len(sorted)
 	if n%2 == 0 {
