@@ -8,6 +8,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
 	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/serializers"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/utils"
 )
 
 // Client wraps Redis client with benchmark functionality
@@ -117,10 +118,10 @@ func (c *Client) benchmarkSerializer(ser serializers.Serializer, users []models.
 	}
 
 	// Calculate statistics
-	result.SetAvgNs = calculateAverage(result.SetTimes)
-	result.SetMedianNs = calculateMedian(result.SetTimes)
-	result.GetAvgNs = calculateAverage(result.GetTimes)
-	result.GetMedianNs = calculateMedian(result.GetTimes)
+	result.SetAvgNs = utils.CalculateAverage(result.SetTimes)
+	result.SetMedianNs = utils.CalculateMedian(result.SetTimes)
+	result.GetAvgNs = utils.CalculateAverage(result.GetTimes)
+	result.GetMedianNs = utils.CalculateMedian(result.GetTimes)
 
 	return result, nil
 }
@@ -137,42 +138,4 @@ func (c *Client) CleanupTestKeys() error {
 	}
 
 	return nil
-}
-
-// calculateAverage calculates the average of a slice of int64 values
-func calculateAverage(values []int64) int64 {
-	if len(values) == 0 {
-		return 0
-	}
-	var sum int64
-	for _, v := range values {
-		sum += v
-	}
-	return sum / int64(len(values))
-}
-
-// calculateMedian calculates the median of a slice of int64 values
-func calculateMedian(values []int64) int64 {
-	if len(values) == 0 {
-		return 0
-	}
-
-	// Create a copy to avoid modifying the original slice
-	sorted := make([]int64, len(values))
-	copy(sorted, values)
-
-	// Simple bubble sort for small slices
-	n := len(sorted)
-	for i := 0; i < n-1; i++ {
-		for j := 0; j < n-i-1; j++ {
-			if sorted[j] > sorted[j+1] {
-				sorted[j], sorted[j+1] = sorted[j+1], sorted[j]
-			}
-		}
-	}
-
-	if n%2 == 0 {
-		return (sorted[n/2-1] + sorted[n/2]) / 2
-	}
-	return sorted[n/2]
 }

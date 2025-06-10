@@ -3,11 +3,11 @@ package benchmark
 import (
 	"fmt"
 	"reflect"
-	"slices"
 	"time"
 
 	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
 	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/serializers"
+	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/utils"
 )
 
 // Runner handles the execution of serialization benchmarks
@@ -77,10 +77,10 @@ func (r *Runner) benchmarkSerializer(ser serializers.Serializer, iterations int)
 	}
 
 	// Calculate statistics
-	result.MarshalAvgNs = calculateAverage(result.MarshalTimes)
-	result.MarshalMedianNs = calculateMedian(result.MarshalTimes)
-	result.UnmarshalAvgNs = calculateAverage(result.UnmarshalTimes)
-	result.UnmarshalMedianNs = calculateMedian(result.UnmarshalTimes)
+	result.MarshalAvgNs = utils.CalculateAverage(result.MarshalTimes)
+	result.MarshalMedianNs = utils.CalculateMedian(result.MarshalTimes)
+	result.UnmarshalAvgNs = utils.CalculateAverage(result.UnmarshalTimes)
+	result.UnmarshalMedianNs = utils.CalculateMedian(result.UnmarshalTimes)
 
 	return result, nil
 }
@@ -330,34 +330,4 @@ func (r *Runner) testSymmetry(ser serializers.Serializer) serializers.SymmetryRe
 	}
 
 	return result
-}
-
-// calculateAverage calculates the average of a slice of int64 values
-func calculateAverage(values []int64) int64 {
-	if len(values) == 0 {
-		return 0
-	}
-	var sum int64
-	for _, v := range values {
-		sum += v
-	}
-	return sum / int64(len(values))
-}
-
-// calculateMedian calculates the median of a slice of int64 values
-func calculateMedian(values []int64) int64 {
-	if len(values) == 0 {
-		return 0
-	}
-
-	// Create a copy to avoid modifying the original slice
-	sorted := make([]int64, len(values))
-	copy(sorted, values)
-	slices.Sort(sorted)
-
-	n := len(sorted)
-	if n%2 == 0 {
-		return (sorted[n/2-1] + sorted[n/2]) / 2
-	}
-	return sorted[n/2]
 }
