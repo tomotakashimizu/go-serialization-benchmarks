@@ -35,17 +35,17 @@ func (r *Reporter) PrintSerializationResults(results []serializers.Serialization
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s | %-12s\n",
 		"Serializer", "Data Size", "Marshal Avg", "Marshal Med", "Unmarshal Avg", "Unmarshal Med")
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s | %-12s\n",
-		"", "(bytes)", "(μs)", "(μs)", "(μs)", "(μs)")
+		"", "(bytes)", "(ms)", "(ms)", "(ms)", "(ms)")
 	fmt.Println(strings.Repeat("-", 120))
 
 	for _, result := range results {
 		fmt.Printf("%-12s | %-12d | %-12.2f | %-12.2f | %-12.2f | %-12.2f\n",
 			result.SerializerName,
 			result.DataSize,
-			float64(result.MarshalAvgNs)/1000.0,
-			float64(result.MarshalMedianNs)/1000.0,
-			float64(result.UnmarshalAvgNs)/1000.0,
-			float64(result.UnmarshalMedianNs)/1000.0)
+			float64(result.MarshalAvgNs)/1000000.0,
+			float64(result.MarshalMedianNs)/1000000.0,
+			float64(result.UnmarshalAvgNs)/1000000.0,
+			float64(result.UnmarshalMedianNs)/1000000.0)
 	}
 	fmt.Println(strings.Repeat("=", 120))
 }
@@ -90,16 +90,16 @@ func (r *Reporter) PrintRedisResults(results []redis.RedisResult) {
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s\n",
 		"Serializer", "SET Avg", "SET Med", "GET Avg", "GET Med")
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s\n",
-		"", "(μs)", "(μs)", "(μs)", "(μs)")
+		"", "(ms)", "(ms)", "(ms)", "(ms)")
 	fmt.Println(strings.Repeat("-", 100))
 
 	for _, result := range results {
 		fmt.Printf("%-12s | %-12.2f | %-12.2f | %-12.2f | %-12.2f\n",
 			result.SerializerName,
-			float64(result.SetAvgNs)/1000.0,
-			float64(result.SetMedianNs)/1000.0,
-			float64(result.GetAvgNs)/1000.0,
-			float64(result.GetMedianNs)/1000.0)
+			float64(result.SetAvgNs)/1000000.0,
+			float64(result.SetMedianNs)/1000000.0,
+			float64(result.GetAvgNs)/1000000.0,
+			float64(result.GetMedianNs)/1000000.0)
 	}
 	fmt.Println(strings.Repeat("=", 100))
 }
@@ -121,8 +121,8 @@ func (r *Reporter) SaveSerializationResults(results []serializers.SerializationR
 	// Write header
 	header := []string{
 		"Serializer", "DataSize_Bytes", "MarshalAvg_ns", "MarshalMedian_ns",
-		"UnmarshalAvg_ns", "UnmarshalMedian_ns", "MarshalAvg_μs", "MarshalMedian_μs",
-		"UnmarshalAvg_μs", "UnmarshalMedian_μs",
+		"UnmarshalAvg_ns", "UnmarshalMedian_ns", "MarshalAvg_ms", "MarshalMedian_ms",
+		"UnmarshalAvg_ms", "UnmarshalMedian_ms",
 	}
 	if err := writer.Write(header); err != nil {
 		return fmt.Errorf("failed to write header: %w", err)
@@ -137,10 +137,10 @@ func (r *Reporter) SaveSerializationResults(results []serializers.SerializationR
 			strconv.FormatInt(result.MarshalMedianNs, 10),
 			strconv.FormatInt(result.UnmarshalAvgNs, 10),
 			strconv.FormatInt(result.UnmarshalMedianNs, 10),
-			fmt.Sprintf("%.2f", float64(result.MarshalAvgNs)/1000.0),
-			fmt.Sprintf("%.2f", float64(result.MarshalMedianNs)/1000.0),
-			fmt.Sprintf("%.2f", float64(result.UnmarshalAvgNs)/1000.0),
-			fmt.Sprintf("%.2f", float64(result.UnmarshalMedianNs)/1000.0),
+			fmt.Sprintf("%.2f", float64(result.MarshalAvgNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.MarshalMedianNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.UnmarshalAvgNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.UnmarshalMedianNs)/1000000.0),
 		}
 		if err := writer.Write(record); err != nil {
 			return fmt.Errorf("failed to write record: %w", err)
@@ -209,7 +209,7 @@ func (r *Reporter) SaveRedisResults(results []redis.RedisResult) error {
 	// Write header
 	header := []string{
 		"Serializer", "SetAvg_ns", "SetMedian_ns", "GetAvg_ns", "GetMedian_ns",
-		"SetAvg_μs", "SetMedian_μs", "GetAvg_μs", "GetMedian_μs",
+		"SetAvg_ms", "SetMedian_ms", "GetAvg_ms", "GetMedian_ms",
 	}
 	if err := writer.Write(header); err != nil {
 		return fmt.Errorf("failed to write header: %w", err)
@@ -223,10 +223,10 @@ func (r *Reporter) SaveRedisResults(results []redis.RedisResult) error {
 			strconv.FormatInt(result.SetMedianNs, 10),
 			strconv.FormatInt(result.GetAvgNs, 10),
 			strconv.FormatInt(result.GetMedianNs, 10),
-			fmt.Sprintf("%.2f", float64(result.SetAvgNs)/1000.0),
-			fmt.Sprintf("%.2f", float64(result.SetMedianNs)/1000.0),
-			fmt.Sprintf("%.2f", float64(result.GetAvgNs)/1000.0),
-			fmt.Sprintf("%.2f", float64(result.GetMedianNs)/1000.0),
+			fmt.Sprintf("%.2f", float64(result.SetAvgNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.SetMedianNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.GetAvgNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.GetMedianNs)/1000000.0),
 		}
 		if err := writer.Write(record); err != nil {
 			return fmt.Errorf("failed to write record: %w", err)
