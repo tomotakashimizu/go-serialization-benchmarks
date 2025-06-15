@@ -58,6 +58,7 @@ func main() {
 	runner.AddSerializer(serializers.NewJSONSerializer()) // Most common format first
 	runner.AddSerializer(serializers.NewCBORSerializer())
 	runner.AddSerializer(serializers.NewGobSerializer())
+	runner.AddSerializer(serializers.NewJSONiterSerializer())
 	runner.AddSerializer(serializers.NewMsgPackSerializer())
 
 	// Run serialization benchmarks
@@ -107,6 +108,7 @@ func main() {
 				serializers.NewJSONSerializer(), // Most common format first
 				serializers.NewCBORSerializer(),
 				serializers.NewGobSerializer(),
+				serializers.NewJSONiterSerializer(),
 				serializers.NewMsgPackSerializer(),
 			}
 
@@ -139,6 +141,7 @@ func showHelp() {
 	fmt.Printf("- JSON (standard library)\n")
 	fmt.Printf("- CBOR (github.com/fxamacker/cbor/v2)\n")
 	fmt.Printf("- Gob (standard library)\n")
+	fmt.Printf("- JSONiter (github.com/json-iterator/go - high-performance JSON)\n")
 	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n\n")
 
 	fmt.Printf("The benchmark measures:\n")
