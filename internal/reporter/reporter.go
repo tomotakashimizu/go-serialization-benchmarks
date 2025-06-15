@@ -86,7 +86,25 @@ func (r *Reporter) PrintRedisResults(results []redis.RedisResult) {
 	fmt.Println("REDIS PERFORMANCE RESULTS")
 	fmt.Println(strings.Repeat("=", 100))
 
-	// Header
+	// First table: Total time (including serialization)
+	fmt.Println("Total Time (including serialization):")
+	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s\n",
+		"Serializer", "SET Avg", "SET Med", "GET Avg", "GET Med")
+	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s\n",
+		"", "(ms)", "(ms)", "(ms)", "(ms)")
+	fmt.Println(strings.Repeat("-", 100))
+
+	for _, result := range results {
+		fmt.Printf("%-12s | %-12.2f | %-12.2f | %-12.2f | %-12.2f\n",
+			result.SerializerName,
+			float64(result.TotalSetAvgNs)/1000000.0,
+			float64(result.TotalSetMedianNs)/1000000.0,
+			float64(result.TotalGetAvgNs)/1000000.0,
+			float64(result.TotalGetMedianNs)/1000000.0)
+	}
+
+	fmt.Println()
+	fmt.Println("Pure I/O Time (Redis operations only):")
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s\n",
 		"Serializer", "SET Avg", "SET Med", "GET Avg", "GET Med")
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s\n",
@@ -209,8 +227,11 @@ func (r *Reporter) SaveRedisResults(results []redis.RedisResult) error {
 
 	// Write header
 	header := []string{
-		"Serializer", "SetAvg_ns", "SetMedian_ns", "GetAvg_ns", "GetMedian_ns",
-		"SetAvg_ms", "SetMedian_ms", "GetAvg_ms", "GetMedian_ms",
+		"Serializer",
+		"TotalSetAvg_ns", "TotalSetMedian_ns", "TotalGetAvg_ns", "TotalGetMedian_ns",
+		"TotalSetAvg_ms", "TotalSetMedian_ms", "TotalGetAvg_ms", "TotalGetMedian_ms",
+		"IOSetAvg_ns", "IOSetMedian_ns", "IOGetAvg_ns", "IOGetMedian_ns",
+		"IOSetAvg_ms", "IOSetMedian_ms", "IOGetAvg_ms", "IOGetMedian_ms",
 	}
 	if err := writer.Write(header); err != nil {
 		return fmt.Errorf("failed to write header: %w", err)
@@ -220,6 +241,16 @@ func (r *Reporter) SaveRedisResults(results []redis.RedisResult) error {
 	for _, result := range results {
 		record := []string{
 			result.SerializerName,
+			// Total times (including serialization)
+			strconv.FormatInt(result.TotalSetAvgNs, 10),
+			strconv.FormatInt(result.TotalSetMedianNs, 10),
+			strconv.FormatInt(result.TotalGetAvgNs, 10),
+			strconv.FormatInt(result.TotalGetMedianNs, 10),
+			fmt.Sprintf("%.2f", float64(result.TotalSetAvgNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.TotalSetMedianNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.TotalGetAvgNs)/1000000.0),
+			fmt.Sprintf("%.2f", float64(result.TotalGetMedianNs)/1000000.0),
+			// Pure I/O times (Redis operations only)
 			strconv.FormatInt(result.SetAvgNs, 10),
 			strconv.FormatInt(result.SetMedianNs, 10),
 			strconv.FormatInt(result.GetAvgNs, 10),

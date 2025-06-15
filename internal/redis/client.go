@@ -20,12 +20,22 @@ type Client struct {
 // RedisResult contains Redis SET/GET performance results
 type RedisResult struct {
 	SerializerName string
-	SetTimes       []int64 // nanoseconds
-	GetTimes       []int64 // nanoseconds
-	SetAvgNs       int64
-	SetMedianNs    int64
-	GetAvgNs       int64
-	GetMedianNs    int64
+
+	// Pure I/O times (Redis operations only)
+	SetTimes    []int64 // nanoseconds
+	GetTimes    []int64 // nanoseconds
+	SetAvgNs    int64
+	SetMedianNs int64
+	GetAvgNs    int64
+	GetMedianNs int64
+
+	// Total times (including serialization)
+	TotalSetTimes    []int64 // nanoseconds (marshal + SET)
+	TotalGetTimes    []int64 // nanoseconds (GET + unmarshal)
+	TotalSetAvgNs    int64
+	TotalSetMedianNs int64
+	TotalGetAvgNs    int64
+	TotalGetMedianNs int64
 }
 
 // NewClient creates a new Redis client
@@ -75,12 +85,8 @@ func (c *Client) benchmarkSerializer(ser serializers.Serializer, users []models.
 		SerializerName: ser.Name(),
 		SetTimes:       make([]int64, iterations),
 		GetTimes:       make([]int64, iterations),
-	}
-
-	// Serialize the users slice once
-	data, err := ser.MarshalUsers(users)
-	if err != nil {
-		return result, fmt.Errorf("failed to marshal users: %w", err)
+		TotalSetTimes:  make([]int64, iterations),
+		TotalGetTimes:  make([]int64, iterations),
 	}
 
 	keyPrefix := fmt.Sprintf("benchmark:%s:users", ser.Name())
@@ -89,39 +95,61 @@ func (c *Client) benchmarkSerializer(ser serializers.Serializer, users []models.
 	for i := 0; i < iterations; i++ {
 		key := fmt.Sprintf("%s:%d", keyPrefix, i)
 
-		// Measure SET operation
-		start := time.Now()
-		err := c.rdb.Set(c.ctx, key, data, 0).Err()
-		setTime := time.Since(start).Nanoseconds()
+		// Measure total SET operation (marshal + SET)
+		totalSetStart := time.Now()
+		data, err := ser.MarshalUsers(users)
+		if err != nil {
+			return result, fmt.Errorf("failed to marshal users: %w", err)
+		}
+
+		// Measure pure SET operation
+		setStart := time.Now()
+		err = c.rdb.Set(c.ctx, key, data, 0).Err()
+		setTime := time.Since(setStart).Nanoseconds()
 		if err != nil {
 			return result, fmt.Errorf("SET operation failed: %w", err)
 		}
-		result.SetTimes[i] = setTime
+		totalSetTime := time.Since(totalSetStart).Nanoseconds()
 
-		// Measure GET operation
-		start = time.Now()
+		result.SetTimes[i] = setTime
+		result.TotalSetTimes[i] = totalSetTime
+
+		// Measure total GET operation (GET + unmarshal)
+		totalGetStart := time.Now()
+
+		// Measure pure GET operation
+		getStart := time.Now()
 		retrievedData, err := c.rdb.Get(c.ctx, key).Bytes()
-		getTime := time.Since(start).Nanoseconds()
+		getTime := time.Since(getStart).Nanoseconds()
 		if err != nil {
 			return result, fmt.Errorf("GET operation failed: %w", err)
 		}
-		result.GetTimes[i] = getTime
 
-		// Verify data integrity
+		// Complete unmarshal for total time
 		_, err = ser.UnmarshalUsers(retrievedData)
 		if err != nil {
 			return result, fmt.Errorf("failed to unmarshal retrieved users data: %w", err)
 		}
+		totalGetTime := time.Since(totalGetStart).Nanoseconds()
+
+		result.GetTimes[i] = getTime
+		result.TotalGetTimes[i] = totalGetTime
 
 		// Clean up the key
 		c.rdb.Del(c.ctx, key)
 	}
 
-	// Calculate statistics
+	// Calculate statistics for pure I/O times
 	result.SetAvgNs = utils.CalculateAverage(result.SetTimes)
 	result.SetMedianNs = utils.CalculateMedian(result.SetTimes)
 	result.GetAvgNs = utils.CalculateAverage(result.GetTimes)
 	result.GetMedianNs = utils.CalculateMedian(result.GetTimes)
+
+	// Calculate statistics for total times (including serialization)
+	result.TotalSetAvgNs = utils.CalculateAverage(result.TotalSetTimes)
+	result.TotalSetMedianNs = utils.CalculateMedian(result.TotalSetTimes)
+	result.TotalGetAvgNs = utils.CalculateAverage(result.TotalGetTimes)
+	result.TotalGetMedianNs = utils.CalculateMedian(result.TotalGetTimes)
 
 	return result, nil
 }
