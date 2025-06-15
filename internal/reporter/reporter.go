@@ -35,13 +35,13 @@ func (r *Reporter) PrintSerializationResults(results []serializers.Serialization
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s | %-12s\n",
 		"Serializer", "Data Size", "Marshal Avg", "Marshal Med", "Unmarshal Avg", "Unmarshal Med")
 	fmt.Printf("%-12s | %-12s | %-12s | %-12s | %-12s | %-12s\n",
-		"", "(bytes)", "(ms)", "(ms)", "(ms)", "(ms)")
+		"", "(MB)", "(ms)", "(ms)", "(ms)", "(ms)")
 	fmt.Println(strings.Repeat("-", 120))
 
 	for _, result := range results {
-		fmt.Printf("%-12s | %-12d | %-12.2f | %-12.2f | %-12.2f | %-12.2f\n",
+		fmt.Printf("%-12s | %-12.2f | %-12.2f | %-12.2f | %-12.2f | %-12.2f\n",
 			result.SerializerName,
-			result.DataSize,
+			float64(result.DataSize)/1000000.0,
 			float64(result.MarshalAvgNs)/1000000.0,
 			float64(result.MarshalMedianNs)/1000000.0,
 			float64(result.UnmarshalAvgNs)/1000000.0,
@@ -120,7 +120,7 @@ func (r *Reporter) SaveSerializationResults(results []serializers.SerializationR
 
 	// Write header
 	header := []string{
-		"Serializer", "DataSize_Bytes", "MarshalAvg_ns", "MarshalMedian_ns",
+		"Serializer", "DataSize_Bytes", "DataSize_MB", "MarshalAvg_ns", "MarshalMedian_ns",
 		"UnmarshalAvg_ns", "UnmarshalMedian_ns", "MarshalAvg_ms", "MarshalMedian_ms",
 		"UnmarshalAvg_ms", "UnmarshalMedian_ms",
 	}
@@ -133,6 +133,7 @@ func (r *Reporter) SaveSerializationResults(results []serializers.SerializationR
 		record := []string{
 			result.SerializerName,
 			strconv.Itoa(result.DataSize),
+			fmt.Sprintf("%.2f", float64(result.DataSize)/1000000.0),
 			strconv.FormatInt(result.MarshalAvgNs, 10),
 			strconv.FormatInt(result.MarshalMedianNs, 10),
 			strconv.FormatInt(result.UnmarshalAvgNs, 10),
