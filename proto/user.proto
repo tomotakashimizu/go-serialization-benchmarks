@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/tomotakashimizu/go-serialization-benchmarks/proto";
+
+import "google/protobuf/timestamp.proto";
+
+// User represents a user with nested structures
+message User {
+  int64 id = 1;
+  string name = 2;
+  string email = 3;
+  int32 age = 4;
+  bool is_active = 5;
+  Profile profile = 6;
+  Settings settings = 7;
+  repeated string tags = 8;
+  map<string, string> metadata = 9; // JSON metadata converted to string
+  google.protobuf.Timestamp created_at = 10;
+}
+
+// Profile represents user profile information (2nd layer)
+message Profile {
+  string first_name = 1;
+  string last_name = 2;
+  string bio = 3;
+  string avatar = 4;
+  repeated Link social_links = 5;
+  Preferences preferences = 6;
+}
+
+// Link represents a social media link (3rd layer)
+message Link {
+  string platform = 1;
+  string url = 2;
+}
+
+// Preferences represents user preferences (3rd layer)
+message Preferences {
+  string theme = 1;
+  string language = 2;
+  map<string, bool> notifications = 3;
+  PrivacySettings privacy = 4;
+}
+
+// PrivacySettings represents privacy settings (4th layer)
+message PrivacySettings {
+  bool profile_public = 1;
+  bool email_visible = 2;
+  bool show_activity = 3;
+}
+
+// Settings represents user application settings (2nd layer)
+message Settings {
+  string language = 1;
+  string timezone = 2;
+  repeated string features = 3;
+  map<string, int32> limits = 4;
+}
+
+// UserList represents a list of users for batch operations
+message UserList {
+  repeated User users = 1;
+} 

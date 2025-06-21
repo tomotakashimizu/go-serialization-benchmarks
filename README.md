@@ -19,6 +19,7 @@ Go 言語における各種シリアライゼーション形式のパフォー�
 - **GoJSON** - 高性能 JSON ([`github.com/goccy/go-json`](https://github.com/goccy/go-json)) - 標準ライブラリの 100%互換高性能版
 - **JSONiter** - 高性能 JSON ([`github.com/json-iterator/go`](https://github.com/json-iterator/go)) - 標準ライブラリの 100%互換高性能版
 - **MessagePack** - [`github.com/vmihailenco/msgpack/v5`](https://github.com/vmihailenco/msgpack)
+- **Protocol Buffers** - Google Protocol Buffers ([`google.golang.org/protobuf`](https://github.com/protocolbuffers/protobuf-go)) - 効率的で言語に依存しないシリアライゼーション形式
 
 ## 測定項目
 
@@ -61,7 +62,11 @@ go-serialization-benchmarks/
 │       ├── gob.go                 # Gob実装
 │       ├── gojson.go              # GoJSON実装
 │       ├── jsoniter.go            # JSONiter実装
-│       └── msgpack.go             # MessagePack実装
+│       ├── msgpack.go             # MessagePack実装
+│       └── protobuf.go            # Protocol Buffers実装
+├── proto/
+│   ├── user.proto                  # Protocol Buffersスキーマ定義
+│   └── user.pb.go                  # 生成されたProtocol Buffersコード
 ├── results/                        # 結果出力先
 ├── go.mod                          # Go モジュール設定
 └── README.md                       # このファイル
