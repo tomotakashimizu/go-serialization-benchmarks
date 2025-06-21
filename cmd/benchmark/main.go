@@ -58,6 +58,7 @@ func main() {
 	runner.AddSerializer(serializers.NewJSONSerializer()) // Most common format first
 	runner.AddSerializer(serializers.NewCBORSerializer())
 	runner.AddSerializer(serializers.NewEasyJSONSerializer())
+	runner.AddSerializer(serializers.NewFlatBuffersSerializer())
 	runner.AddSerializer(serializers.NewGobSerializer())
 	runner.AddSerializer(serializers.NewGoJSONSerializer())
 	runner.AddSerializer(serializers.NewJSONiterSerializer())
@@ -112,6 +113,7 @@ func main() {
 				serializers.NewJSONSerializer(), // Most common format first
 				serializers.NewCBORSerializer(),
 				serializers.NewEasyJSONSerializer(),
+				serializers.NewFlatBuffersSerializer(),
 				serializers.NewGobSerializer(),
 				serializers.NewGoJSONSerializer(),
 				serializers.NewJSONiterSerializer(),
@@ -149,6 +151,7 @@ func showHelp() {
 	fmt.Printf("- JSON (standard library)\n")
 	fmt.Printf("- CBOR (github.com/fxamacker/cbor/v2)\n")
 	fmt.Printf("- EasyJSON (github.com/mailru/easyjson - high-performance JSON with code generation)\n")
+	fmt.Printf("- FlatBuffers (github.com/google/flatbuffers - zero-copy serialization)\n")
 	fmt.Printf("- Gob (standard library)\n")
 	fmt.Printf("- GoJSON (github.com/goccy/go-json - high-performance JSON)\n")
 	fmt.Printf("- JSONiter (github.com/json-iterator/go - high-performance JSON)\n")

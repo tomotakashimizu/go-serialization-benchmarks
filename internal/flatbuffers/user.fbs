@@ -1,0 +1,83 @@
+namespace go_serialization_benchmarks.flatbuffers;
+
+// 4th layer - PrivacySettings
+table PrivacySettings {
+  profile_public: bool = false;
+  email_visible: bool = false;
+  show_activity: bool = false;
+}
+
+// 3rd layer - Link
+table Link {
+  platform: string;
+  url: string;
+}
+
+// 3rd layer - Preferences
+table Preferences {
+  theme: string;
+  language: string;
+  notifications: [NotificationSetting];
+  privacy: PrivacySettings;
+}
+
+// Helper for map-like notifications
+table NotificationSetting {
+  key: string;
+  value: bool;
+}
+
+// 2nd layer - Profile
+table Profile {
+  first_name: string;
+  last_name: string;
+  bio: string;
+  avatar: string;
+  social_links: [Link];
+  preferences: Preferences;
+}
+
+// 2nd layer - Settings
+table Settings {
+  language: string;
+  timezone: string;
+  features: [string];
+  limits: [LimitSetting];
+}
+
+// Helper for map-like limits
+table LimitSetting {
+  key: string;
+  value: int;
+}
+
+// Metadata for map-like structure
+table MetadataEntry {
+  key: string;
+  string_value: string;
+  int_value: int;
+  bool_value: bool;
+  float_value: double;
+  value_type: ubyte; // 0: string, 1: int, 2: bool, 3: float
+}
+
+// Main User table
+table User {
+  id: int64;
+  name: string;
+  email: string;
+  age: int;
+  is_active: bool = false;
+  profile: Profile;
+  settings: Settings;
+  tags: [string];
+  metadata: [MetadataEntry];
+  created_at: int64; // Unix timestamp in nanoseconds
+}
+
+// Collection of users
+table UserList {
+  users: [User];
+}
+
+root_type UserList; 
