@@ -6,7 +6,11 @@ import (
 	"time"
 )
 
+//go:generate easyjson -all test_data.go
+
 // Users represents a collection of User objects
+//
+//easyjson:json
 type Users []User
 
 // User represents a user with nested structures

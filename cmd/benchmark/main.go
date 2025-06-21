@@ -57,6 +57,7 @@ func main() {
 	// Add all serializers (JSON first, then alphabetical order)
 	runner.AddSerializer(serializers.NewJSONSerializer()) // Most common format first
 	runner.AddSerializer(serializers.NewCBORSerializer())
+	runner.AddSerializer(serializers.NewEasyJSONSerializer())
 	runner.AddSerializer(serializers.NewGobSerializer())
 	runner.AddSerializer(serializers.NewGoJSONSerializer())
 	runner.AddSerializer(serializers.NewJSONiterSerializer())
@@ -108,6 +109,7 @@ func main() {
 			redisSerializers := []serializers.Serializer{
 				serializers.NewJSONSerializer(), // Most common format first
 				serializers.NewCBORSerializer(),
+				serializers.NewEasyJSONSerializer(),
 				serializers.NewGobSerializer(),
 				serializers.NewGoJSONSerializer(),
 				serializers.NewJSONiterSerializer(),
@@ -142,6 +144,7 @@ func showHelp() {
 	fmt.Printf("This tool compares the performance of different serialization formats:\n")
 	fmt.Printf("- JSON (standard library)\n")
 	fmt.Printf("- CBOR (github.com/fxamacker/cbor/v2)\n")
+	fmt.Printf("- EasyJSON (github.com/mailru/easyjson - high-performance JSON with code generation)\n")
 	fmt.Printf("- Gob (standard library)\n")
 	fmt.Printf("- GoJSON (github.com/goccy/go-json - high-performance JSON)\n")
 	fmt.Printf("- JSONiter (github.com/json-iterator/go - high-performance JSON)\n")
