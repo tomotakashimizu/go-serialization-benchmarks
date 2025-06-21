@@ -62,6 +62,7 @@ func main() {
 	runner.AddSerializer(serializers.NewGoJSONSerializer())
 	runner.AddSerializer(serializers.NewJSONiterSerializer())
 	runner.AddSerializer(serializers.NewMsgPackSerializer())
+	runner.AddSerializer(serializers.NewProtobufSerializer())
 
 	// Run serialization benchmarks
 	fmt.Println("Running serialization benchmarks...")
@@ -114,6 +115,7 @@ func main() {
 				serializers.NewGoJSONSerializer(),
 				serializers.NewJSONiterSerializer(),
 				serializers.NewMsgPackSerializer(),
+				serializers.NewProtobufSerializer(),
 			}
 
 			redisResults, err := redisClient.BenchmarkRedisOperations(redisSerializers, users, *iterations)
@@ -148,7 +150,8 @@ func showHelp() {
 	fmt.Printf("- Gob (standard library)\n")
 	fmt.Printf("- GoJSON (github.com/goccy/go-json - high-performance JSON)\n")
 	fmt.Printf("- JSONiter (github.com/json-iterator/go - high-performance JSON)\n")
-	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n\n")
+	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n")
+	fmt.Printf("- protobuf (google.golang.org/protobuf)\n\n")
 
 	fmt.Printf("The benchmark measures:\n")
 	fmt.Printf("1. Serialization/deserialization speed (average & median)\n")

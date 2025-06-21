@@ -9,6 +9,7 @@ require (
 	github.com/mailru/easyjson v0.9.0
 	github.com/redis/go-redis/v9 v9.10.0
 	github.com/vmihailenco/msgpack/v5 v5.4.1
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
