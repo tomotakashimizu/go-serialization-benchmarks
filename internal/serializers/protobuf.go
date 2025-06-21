@@ -12,7 +12,7 @@ import (
 	pb "github.com/tomotakashimizu/go-serialization-benchmarks/proto"
 )
 
-// ProtobufSerializer implements Serializer interface for Protocol Buffers
+// ProtobufSerializer implements Serializer interface for protobuf
 type ProtobufSerializer struct{}
 
 // NewProtobufSerializer creates a new ProtobufSerializer

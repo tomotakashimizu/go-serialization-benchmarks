@@ -151,7 +151,7 @@ func showHelp() {
 	fmt.Printf("- GoJSON (github.com/goccy/go-json - high-performance JSON)\n")
 	fmt.Printf("- JSONiter (github.com/json-iterator/go - high-performance JSON)\n")
 	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n")
-	fmt.Printf("- Protocol Buffers (google.golang.org/protobuf)\n\n")
+	fmt.Printf("- protobuf (google.golang.org/protobuf)\n\n")
 
 	fmt.Printf("The benchmark measures:\n")
 	fmt.Printf("1. Serialization/deserialization speed (average & median)\n")
