@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.26.1
-// source: proto/user.proto
+// source: internal/proto/user.proto
 
 package proto
 
@@ -41,7 +41,7 @@ type User struct {
 
 func (x *User) Reset() {
 	*x = User{}
-	mi := &file_proto_user_proto_msgTypes[0]
+	mi := &file_internal_proto_user_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53,7 +53,7 @@ func (x *User) String() string {
 func (*User) ProtoMessage() {}
 
 func (x *User) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_user_proto_msgTypes[0]
+	mi := &file_internal_proto_user_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -66,7 +66,7 @@ func (x *User) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use User.ProtoReflect.Descriptor instead.
 func (*User) Descriptor() ([]byte, []int) {
-	return file_proto_user_proto_rawDescGZIP(), []int{0}
+	return file_internal_proto_user_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *User) GetId() int64 {
@@ -154,7 +154,7 @@ type Profile struct {
 
 func (x *Profile) Reset() {
 	*x = Profile{}
-	mi := &file_proto_user_proto_msgTypes[1]
+	mi := &file_internal_proto_user_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -166,7 +166,7 @@ func (x *Profile) String() string {
 func (*Profile) ProtoMessage() {}
 
 func (x *Profile) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_user_proto_msgTypes[1]
+	mi := &file_internal_proto_user_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -179,7 +179,7 @@ func (x *Profile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Profile.ProtoReflect.Descriptor instead.
 func (*Profile) Descriptor() ([]byte, []int) {
-	return file_proto_user_proto_rawDescGZIP(), []int{1}
+	return file_internal_proto_user_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Profile) GetFirstName() string {
@@ -235,7 +235,7 @@ type Link struct {
 
 func (x *Link) Reset() {
 	*x = Link{}
-	mi := &file_proto_user_proto_msgTypes[2]
+	mi := &file_internal_proto_user_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -247,7 +247,7 @@ func (x *Link) String() string {
 func (*Link) ProtoMessage() {}
 
 func (x *Link) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_user_proto_msgTypes[2]
+	mi := &file_internal_proto_user_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -260,7 +260,7 @@ func (x *Link) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Link.ProtoReflect.Descriptor instead.
 func (*Link) Descriptor() ([]byte, []int) {
-	return file_proto_user_proto_rawDescGZIP(), []int{2}
+	return file_internal_proto_user_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Link) GetPlatform() string {
@@ -290,7 +290,7 @@ type Preferences struct {
 
 func (x *Preferences) Reset() {
 	*x = Preferences{}
-	mi := &file_proto_user_proto_msgTypes[3]
+	mi := &file_internal_proto_user_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -302,7 +302,7 @@ func (x *Preferences) String() string {
 func (*Preferences) ProtoMessage() {}
 
 func (x *Preferences) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_user_proto_msgTypes[3]
+	mi := &file_internal_proto_user_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -315,7 +315,7 @@ func (x *Preferences) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Preferences.ProtoReflect.Descriptor instead.
 func (*Preferences) Descriptor() ([]byte, []int) {
-	return file_proto_user_proto_rawDescGZIP(), []int{3}
+	return file_internal_proto_user_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Preferences) GetTheme() string {
@@ -358,7 +358,7 @@ type PrivacySettings struct {
 
 func (x *PrivacySettings) Reset() {
 	*x = PrivacySettings{}
-	mi := &file_proto_user_proto_msgTypes[4]
+	mi := &file_internal_proto_user_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -370,7 +370,7 @@ func (x *PrivacySettings) String() string {
 func (*PrivacySettings) ProtoMessage() {}
 
 func (x *PrivacySettings) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_user_proto_msgTypes[4]
+	mi := &file_internal_proto_user_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -383,7 +383,7 @@ func (x *PrivacySettings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrivacySettings.ProtoReflect.Descriptor instead.
 func (*PrivacySettings) Descriptor() ([]byte, []int) {
-	return file_proto_user_proto_rawDescGZIP(), []int{4}
+	return file_internal_proto_user_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *PrivacySettings) GetProfilePublic() bool {
@@ -420,7 +420,7 @@ type Settings struct {
 
 func (x *Settings) Reset() {
 	*x = Settings{}
-	mi := &file_proto_user_proto_msgTypes[5]
+	mi := &file_internal_proto_user_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -432,7 +432,7 @@ func (x *Settings) String() string {
 func (*Settings) ProtoMessage() {}
 
 func (x *Settings) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_user_proto_msgTypes[5]
+	mi := &file_internal_proto_user_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -445,7 +445,7 @@ func (x *Settings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Settings.ProtoReflect.Descriptor instead.
 func (*Settings) Descriptor() ([]byte, []int) {
-	return file_proto_user_proto_rawDescGZIP(), []int{5}
+	return file_internal_proto_user_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Settings) GetLanguage() string {
@@ -486,7 +486,7 @@ type UserList struct {
 
 func (x *UserList) Reset() {
 	*x = UserList{}
-	mi := &file_proto_user_proto_msgTypes[6]
+	mi := &file_internal_proto_user_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -498,7 +498,7 @@ func (x *UserList) String() string {
 func (*UserList) ProtoMessage() {}
 
 func (x *UserList) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_user_proto_msgTypes[6]
+	mi := &file_internal_proto_user_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -511,7 +511,7 @@ func (x *UserList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserList.ProtoReflect.Descriptor instead.
 func (*UserList) Descriptor() ([]byte, []int) {
-	return file_proto_user_proto_rawDescGZIP(), []int{6}
+	return file_internal_proto_user_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UserList) GetUsers() []*User {
@@ -521,11 +521,11 @@ func (x *UserList) GetUsers() []*User {
 	return nil
 }
 
-var File_proto_user_proto protoreflect.FileDescriptor
+var File_internal_proto_user_proto protoreflect.FileDescriptor
 
-const file_proto_user_proto_rawDesc = "" +
+const file_internal_proto_user_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/user.proto\x12\x05proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x89\x03\n" +
+	"\x19internal/proto/user.proto\x12\x05proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x89\x03\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
@@ -574,22 +574,22 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"-\n" +
 	"\bUserList\x12!\n" +
-	"\x05users\x18\x01 \x03(\v2\v.proto.UserR\x05usersB>Z<github.com/tomotakashimizu/go-serialization-benchmarks/protob\x06proto3"
+	"\x05users\x18\x01 \x03(\v2\v.proto.UserR\x05usersBGZEgithub.com/tomotakashimizu/go-serialization-benchmarks/internal/protob\x06proto3"
 
 var (
-	file_proto_user_proto_rawDescOnce sync.Once
-	file_proto_user_proto_rawDescData []byte
+	file_internal_proto_user_proto_rawDescOnce sync.Once
+	file_internal_proto_user_proto_rawDescData []byte
 )
 
-func file_proto_user_proto_rawDescGZIP() []byte {
-	file_proto_user_proto_rawDescOnce.Do(func() {
-		file_proto_user_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_user_proto_rawDesc), len(file_proto_user_proto_rawDesc)))
+func file_internal_proto_user_proto_rawDescGZIP() []byte {
+	file_internal_proto_user_proto_rawDescOnce.Do(func() {
+		file_internal_proto_user_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_internal_proto_user_proto_rawDesc), len(file_internal_proto_user_proto_rawDesc)))
 	})
-	return file_proto_user_proto_rawDescData
+	return file_internal_proto_user_proto_rawDescData
 }
 
-var file_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
-var file_proto_user_proto_goTypes = []any{
+var file_internal_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_internal_proto_user_proto_goTypes = []any{
 	(*User)(nil),                  // 0: proto.User
 	(*Profile)(nil),               // 1: proto.Profile
 	(*Link)(nil),                  // 2: proto.Link
@@ -602,7 +602,7 @@ var file_proto_user_proto_goTypes = []any{
 	nil,                           // 9: proto.Settings.LimitsEntry
 	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
 }
-var file_proto_user_proto_depIdxs = []int32{
+var file_internal_proto_user_proto_depIdxs = []int32{
 	1,  // 0: proto.User.profile:type_name -> proto.Profile
 	5,  // 1: proto.User.settings:type_name -> proto.Settings
 	7,  // 2: proto.User.metadata:type_name -> proto.User.MetadataEntry
@@ -620,26 +620,26 @@ var file_proto_user_proto_depIdxs = []int32{
 	0,  // [0:10] is the sub-list for field type_name
 }
 
-func init() { file_proto_user_proto_init() }
-func file_proto_user_proto_init() {
-	if File_proto_user_proto != nil {
+func init() { file_internal_proto_user_proto_init() }
+func file_internal_proto_user_proto_init() {
+	if File_internal_proto_user_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_user_proto_rawDesc), len(file_proto_user_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_proto_user_proto_rawDesc), len(file_internal_proto_user_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_proto_user_proto_goTypes,
-		DependencyIndexes: file_proto_user_proto_depIdxs,
-		MessageInfos:      file_proto_user_proto_msgTypes,
+		GoTypes:           file_internal_proto_user_proto_goTypes,
+		DependencyIndexes: file_internal_proto_user_proto_depIdxs,
+		MessageInfos:      file_internal_proto_user_proto_msgTypes,
 	}.Build()
-	File_proto_user_proto = out.File
-	file_proto_user_proto_goTypes = nil
-	file_proto_user_proto_depIdxs = nil
+	File_internal_proto_user_proto = out.File
+	file_internal_proto_user_proto_goTypes = nil
+	file_internal_proto_user_proto_depIdxs = nil
 }
