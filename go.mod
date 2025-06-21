@@ -5,6 +5,7 @@ go 1.24.2
 require (
 	github.com/fxamacker/cbor/v2 v2.8.0
 	github.com/goccy/go-json v0.10.5
+	github.com/google/flatbuffers v25.2.10+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/mailru/easyjson v0.9.0
 	github.com/redis/go-redis/v9 v9.10.0

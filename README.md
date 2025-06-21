@@ -15,6 +15,7 @@ Go 言語における各種シリアライゼーション形式のパフォー�
 - **JSON** - Go 標準ライブラリ ([`encoding/json`](https://pkg.go.dev/encoding/json))
 - **CBOR** - [`github.com/fxamacker/cbor/v2`](https://github.com/fxamacker/cbor)
 - **EasyJSON** - 高性能 JSON with コード生成 ([`github.com/mailru/easyjson`](https://github.com/mailru/easyjson)) - コード生成による高性能の JSON シリアライザー
+- **FlatBuffers** - ゼロコピーシリアライゼーション ([`github.com/google/flatbuffers`](https://github.com/google/flatbuffers)) - メモリ効率に優れたクロスプラットフォームシリアライゼーション形式
 - **Gob** - Go 標準ライブラリ ([`encoding/gob`](https://pkg.go.dev/encoding/gob))
 - **GoJSON** - 高性能 JSON ([`github.com/goccy/go-json`](https://github.com/goccy/go-json)) - 標準ライブラリの 100%互換高性能版
 - **JSONiter** - 高性能 JSON ([`github.com/json-iterator/go`](https://github.com/json-iterator/go)) - 標準ライブラリの 100%互換高性能版
@@ -51,6 +52,8 @@ go-serialization-benchmarks/
 │   │   └── runner.go              # ベンチマーク実行ロジック
 │   ├── models/
 │   │   └── test_data.go           # テストデータ構造体
+│   ├── flatbuffers/
+│   │   └── user.fbs               # FlatBuffersスキーマ定義
 │   ├── proto/
 │   │   ├── user.proto             # Protocol Buffersスキーマ定義
 │   │   └── user.pb.go             # 生成されたProtocol Buffersコード
@@ -63,6 +66,7 @@ go-serialization-benchmarks/
 │       ├── json.go                # JSON実装
 │       ├── cbor.go                # CBOR実装
 │       ├── easyjson.go            # EasyJSON実装
+│       ├── flatbuffers.go         # FlatBuffers実装
 │       ├── gob.go                 # Gob実装
 │       ├── gojson.go              # GoJSON実装
 │       ├── jsoniter.go            # JSONiter実装
