@@ -53,7 +53,8 @@ go-serialization-benchmarks/
 │   ├── models/
 │   │   └── test_data.go           # テストデータ構造体
 │   ├── flatbuffers/
-│   │   └── user.fbs               # FlatBuffersスキーマ定義
+│   │   ├── user.fbs               # FlatBuffersスキーマ定義
+│   │   └── generated/             # FlatBuffers生成コード
 │   ├── proto/
 │   │   ├── user.proto             # Protocol Buffersスキーマ定義
 │   │   └── user.pb.go             # 生成されたProtocol Buffersコード
