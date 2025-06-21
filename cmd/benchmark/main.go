@@ -61,6 +61,7 @@ func main() {
 	runner.AddSerializer(serializers.NewGobSerializer())
 	runner.AddSerializer(serializers.NewGoJSONSerializer())
 	runner.AddSerializer(serializers.NewJSONiterSerializer())
+	runner.AddSerializer(serializers.NewMsgpSerializer())
 	runner.AddSerializer(serializers.NewMsgPackSerializer())
 
 	// Run serialization benchmarks
@@ -113,6 +114,7 @@ func main() {
 				serializers.NewGobSerializer(),
 				serializers.NewGoJSONSerializer(),
 				serializers.NewJSONiterSerializer(),
+				serializers.NewMsgpSerializer(),
 				serializers.NewMsgPackSerializer(),
 			}
 
@@ -148,6 +150,7 @@ func showHelp() {
 	fmt.Printf("- Gob (standard library)\n")
 	fmt.Printf("- GoJSON (github.com/goccy/go-json - high-performance JSON)\n")
 	fmt.Printf("- JSONiter (github.com/json-iterator/go - high-performance JSON)\n")
+	fmt.Printf("- Msgp (github.com/tinylib/msgp - high-performance MessagePack with code generation)\n")
 	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n\n")
 
 	fmt.Printf("The benchmark measures:\n")

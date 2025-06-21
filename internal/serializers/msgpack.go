@@ -15,7 +15,7 @@ func NewMsgPackSerializer() *MsgPackSerializer {
 
 // Name returns the name of the serializer
 func (m *MsgPackSerializer) Name() string {
-	return "MessagePack"
+	return "msgpack"
 }
 
 // Marshal serializes a User to MessagePack bytes
