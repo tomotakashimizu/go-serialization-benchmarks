@@ -31,14 +31,14 @@ func (g *GoJSONSerializer) Unmarshal(data []byte) (models.User, error) {
 	return user, err
 }
 
-// MarshalUsers serializes a slice of Users to JSON bytes using goccy/go-json
-func (g *GoJSONSerializer) MarshalUsers(users []models.User) ([]byte, error) {
+// MarshalUsers serializes a collection of Users to JSON bytes using goccy/go-json
+func (g *GoJSONSerializer) MarshalUsers(users models.Users) ([]byte, error) {
 	return gojson.Marshal(users)
 }
 
-// UnmarshalUsers deserializes JSON bytes to a slice of Users using goccy/go-json
-func (g *GoJSONSerializer) UnmarshalUsers(data []byte) ([]models.User, error) {
-	var users []models.User
+// UnmarshalUsers deserializes JSON bytes to a collection of Users using goccy/go-json
+func (g *GoJSONSerializer) UnmarshalUsers(data []byte) (models.Users, error) {
+	var users models.Users
 	err := gojson.Unmarshal(data, &users)
 	return users, err
 }

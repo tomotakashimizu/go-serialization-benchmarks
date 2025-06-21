@@ -64,7 +64,7 @@ func (c *Client) Close() error {
 }
 
 // BenchmarkRedisOperations benchmarks Redis SET/GET operations for all serializers
-func (c *Client) BenchmarkRedisOperations(serializers []serializers.Serializer, users []models.User, iterations int) ([]RedisResult, error) {
+func (c *Client) BenchmarkRedisOperations(serializers []serializers.Serializer, users models.Users, iterations int) ([]RedisResult, error) {
 	results := make([]RedisResult, 0, len(serializers))
 
 	for _, ser := range serializers {
@@ -80,7 +80,7 @@ func (c *Client) BenchmarkRedisOperations(serializers []serializers.Serializer, 
 }
 
 // benchmarkSerializer benchmarks Redis operations for a single serializer
-func (c *Client) benchmarkSerializer(ser serializers.Serializer, users []models.User, iterations int) (RedisResult, error) {
+func (c *Client) benchmarkSerializer(ser serializers.Serializer, users models.Users, iterations int) (RedisResult, error) {
 	result := RedisResult{
 		SerializerName: ser.Name(),
 		SetTimes:       make([]int64, iterations),

@@ -40,8 +40,8 @@ func (g *GobSerializer) Unmarshal(data []byte) (models.User, error) {
 	return user, err
 }
 
-// MarshalUsers serializes a slice of Users to Gob bytes
-func (g *GobSerializer) MarshalUsers(users []models.User) ([]byte, error) {
+// MarshalUsers serializes a collection of Users to Gob bytes
+func (g *GobSerializer) MarshalUsers(users models.Users) ([]byte, error) {
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
 	err := enc.Encode(users)
@@ -51,9 +51,9 @@ func (g *GobSerializer) MarshalUsers(users []models.User) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// UnmarshalUsers deserializes Gob bytes to a slice of Users
-func (g *GobSerializer) UnmarshalUsers(data []byte) ([]models.User, error) {
-	var users []models.User
+// UnmarshalUsers deserializes Gob bytes to a collection of Users
+func (g *GobSerializer) UnmarshalUsers(data []byte) (models.Users, error) {
+	var users models.Users
 	buf := bytes.NewBuffer(data)
 	dec := gob.NewDecoder(buf)
 	err := dec.Decode(&users)
