@@ -7,6 +7,7 @@ import (
 )
 
 //go:generate easyjson -all test_data.go
+//go:generate msgp
 
 // Users represents a collection of User objects
 //
@@ -15,55 +16,55 @@ type Users []User
 
 // User represents a user with nested structures
 type User struct {
-	ID        int64                  `json:"id" msgpack:"id" cbor:"id"`
-	Name      string                 `json:"name" msgpack:"name" cbor:"name"`
-	Email     string                 `json:"email" msgpack:"email" cbor:"email"`
-	Age       int                    `json:"age" msgpack:"age" cbor:"age"`
-	IsActive  bool                   `json:"is_active" msgpack:"is_active" cbor:"is_active"`
-	Profile   Profile                `json:"profile" msgpack:"profile" cbor:"profile"`
-	Settings  Settings               `json:"settings" msgpack:"settings" cbor:"settings"`
-	Tags      []string               `json:"tags" msgpack:"tags" cbor:"tags"`
-	Metadata  map[string]interface{} `json:"metadata" msgpack:"metadata" cbor:"metadata"`
-	CreatedAt time.Time              `json:"created_at" msgpack:"created_at" cbor:"created_at"`
+	ID        int64                  `json:"id" msgpack:"id" cbor:"id" msg:"id"`
+	Name      string                 `json:"name" msgpack:"name" cbor:"name" msg:"name"`
+	Email     string                 `json:"email" msgpack:"email" cbor:"email" msg:"email"`
+	Age       int                    `json:"age" msgpack:"age" cbor:"age" msg:"age"`
+	IsActive  bool                   `json:"is_active" msgpack:"is_active" cbor:"is_active" msg:"is_active"`
+	Profile   Profile                `json:"profile" msgpack:"profile" cbor:"profile" msg:"profile"`
+	Settings  Settings               `json:"settings" msgpack:"settings" cbor:"settings" msg:"settings"`
+	Tags      []string               `json:"tags" msgpack:"tags" cbor:"tags" msg:"tags"`
+	Metadata  map[string]interface{} `json:"metadata" msgpack:"metadata" cbor:"metadata" msg:"metadata"`
+	CreatedAt time.Time              `json:"created_at" msgpack:"created_at" cbor:"created_at" msg:"created_at"`
 }
 
 // Profile represents user profile information (2nd layer)
 type Profile struct {
-	FirstName   string      `json:"first_name" msgpack:"first_name" cbor:"first_name"`
-	LastName    string      `json:"last_name" msgpack:"last_name" cbor:"last_name"`
-	Bio         string      `json:"bio" msgpack:"bio" cbor:"bio"`
-	Avatar      string      `json:"avatar" msgpack:"avatar" cbor:"avatar"`
-	SocialLinks []Link      `json:"social_links" msgpack:"social_links" cbor:"social_links"`
-	Preferences Preferences `json:"preferences" msgpack:"preferences" cbor:"preferences"`
+	FirstName   string      `json:"first_name" msgpack:"first_name" cbor:"first_name" msg:"first_name"`
+	LastName    string      `json:"last_name" msgpack:"last_name" cbor:"last_name" msg:"last_name"`
+	Bio         string      `json:"bio" msgpack:"bio" cbor:"bio" msg:"bio"`
+	Avatar      string      `json:"avatar" msgpack:"avatar" cbor:"avatar" msg:"avatar"`
+	SocialLinks []Link      `json:"social_links" msgpack:"social_links" cbor:"social_links" msg:"social_links"`
+	Preferences Preferences `json:"preferences" msgpack:"preferences" cbor:"preferences" msg:"preferences"`
 }
 
 // Link represents a social media link (3rd layer)
 type Link struct {
-	Platform string `json:"platform" msgpack:"platform" cbor:"platform"`
-	URL      string `json:"url" msgpack:"url" cbor:"url"`
+	Platform string `json:"platform" msgpack:"platform" cbor:"platform" msg:"platform"`
+	URL      string `json:"url" msgpack:"url" cbor:"url" msg:"url"`
 }
 
 // Preferences represents user preferences (3rd layer)
 type Preferences struct {
-	Theme         string          `json:"theme" msgpack:"theme" cbor:"theme"`
-	Language      string          `json:"language" msgpack:"language" cbor:"language"`
-	Notifications map[string]bool `json:"notifications" msgpack:"notifications" cbor:"notifications"`
-	Privacy       PrivacySettings `json:"privacy" msgpack:"privacy" cbor:"privacy"`
+	Theme         string          `json:"theme" msgpack:"theme" cbor:"theme" msg:"theme"`
+	Language      string          `json:"language" msgpack:"language" cbor:"language" msg:"language"`
+	Notifications map[string]bool `json:"notifications" msgpack:"notifications" cbor:"notifications" msg:"notifications"`
+	Privacy       PrivacySettings `json:"privacy" msgpack:"privacy" cbor:"privacy" msg:"privacy"`
 }
 
 // PrivacySettings represents privacy settings (4th layer for deeper nesting)
 type PrivacySettings struct {
-	ProfilePublic bool `json:"profile_public" msgpack:"profile_public" cbor:"profile_public"`
-	EmailVisible  bool `json:"email_visible" msgpack:"email_visible" cbor:"email_visible"`
-	ShowActivity  bool `json:"show_activity" msgpack:"show_activity" cbor:"show_activity"`
+	ProfilePublic bool `json:"profile_public" msgpack:"profile_public" cbor:"profile_public" msg:"profile_public"`
+	EmailVisible  bool `json:"email_visible" msgpack:"email_visible" cbor:"email_visible" msg:"email_visible"`
+	ShowActivity  bool `json:"show_activity" msgpack:"show_activity" cbor:"show_activity" msg:"show_activity"`
 }
 
 // Settings represents user application settings (2nd layer)
 type Settings struct {
-	Language string         `json:"language" msgpack:"language" cbor:"language"`
-	TimeZone string         `json:"timezone" msgpack:"timezone" cbor:"timezone"`
-	Features []string       `json:"features" msgpack:"features" cbor:"features"`
-	Limits   map[string]int `json:"limits" msgpack:"limits" cbor:"limits"`
+	Language string         `json:"language" msgpack:"language" cbor:"language" msg:"language"`
+	TimeZone string         `json:"timezone" msgpack:"timezone" cbor:"timezone" msg:"timezone"`
+	Features []string       `json:"features" msgpack:"features" cbor:"features" msg:"features"`
+	Limits   map[string]int `json:"limits" msgpack:"limits" cbor:"limits" msg:"limits"`
 }
 
 // GenerateTestUsers generates a specified number of test users

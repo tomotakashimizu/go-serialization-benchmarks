@@ -61,6 +61,7 @@ func main() {
 	runner.AddSerializer(serializers.NewGobSerializer())
 	runner.AddSerializer(serializers.NewGoJSONSerializer())
 	runner.AddSerializer(serializers.NewJSONiterSerializer())
+	runner.AddSerializer(serializers.NewMsgpSerializer())
 	runner.AddSerializer(serializers.NewMsgPackSerializer())
 	runner.AddSerializer(serializers.NewProtobufSerializer())
 
@@ -114,6 +115,7 @@ func main() {
 				serializers.NewGobSerializer(),
 				serializers.NewGoJSONSerializer(),
 				serializers.NewJSONiterSerializer(),
+				serializers.NewMsgpSerializer(),
 				serializers.NewMsgPackSerializer(),
 				serializers.NewProtobufSerializer(),
 			}
@@ -150,8 +152,9 @@ func showHelp() {
 	fmt.Printf("- Gob (standard library)\n")
 	fmt.Printf("- GoJSON (github.com/goccy/go-json - high-performance JSON)\n")
 	fmt.Printf("- JSONiter (github.com/json-iterator/go - high-performance JSON)\n")
-	fmt.Printf("- MessagePack (github.com/vmihailenco/msgpack/v5)\n")
-	fmt.Printf("- protobuf (google.golang.org/protobuf)\n\n")
+	fmt.Printf("- Msgp (github.com/tinylib/msgp - high-performance MessagePack with code generation)\n")
+	fmt.Printf("- MsgPack (github.com/vmihailenco/msgpack/v5)\n")
+	fmt.Printf("- Protobuf (google.golang.org/protobuf)\n\n")
 
 	fmt.Printf("The benchmark measures:\n")
 	fmt.Printf("1. Serialization/deserialization speed (average & median)\n")
