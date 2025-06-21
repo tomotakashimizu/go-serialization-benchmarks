@@ -6,6 +6,24 @@ import (
 	"time"
 )
 
+// Users represents a collection of User objects
+type Users []User
+
+// Len returns the number of users
+func (u Users) Len() int {
+	return len(u)
+}
+
+// IsEmpty returns true if the collection is empty
+func (u Users) IsEmpty() bool {
+	return len(u) == 0
+}
+
+// ToSlice returns the underlying slice
+func (u Users) ToSlice() []User {
+	return []User(u)
+}
+
 // User represents a user with nested structures
 type User struct {
 	ID        int64                  `json:"id" msgpack:"id" cbor:"id"`
@@ -60,8 +78,8 @@ type Settings struct {
 }
 
 // GenerateTestUsers generates a specified number of test users
-func GenerateTestUsers(count int) []User {
-	users := make([]User, count)
+func GenerateTestUsers(count int) Users {
+	users := make(Users, count)
 
 	platforms := []string{"Twitter", "GitHub", "LinkedIn", "Instagram", "Facebook"}
 	themes := []string{"dark", "light", "auto", "contrast"}

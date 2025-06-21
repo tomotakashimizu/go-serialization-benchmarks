@@ -12,7 +12,7 @@ import (
 
 // Runner handles the execution of serialization benchmarks
 type Runner struct {
-	users       []models.User
+	users       models.Users
 	serializers []serializers.Serializer
 }
 
@@ -22,7 +22,7 @@ func NewRunner() *Runner {
 }
 
 // SetTestData sets the test data for benchmarking
-func (r *Runner) SetTestData(users []models.User) {
+func (r *Runner) SetTestData(users models.Users) {
 	r.users = users
 }
 
