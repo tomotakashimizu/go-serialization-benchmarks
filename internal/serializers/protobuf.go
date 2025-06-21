@@ -9,7 +9,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/tomotakashimizu/go-serialization-benchmarks/internal/models"
-	pb "github.com/tomotakashimizu/go-serialization-benchmarks/proto"
+	pb "github.com/tomotakashimizu/go-serialization-benchmarks/internal/proto"
 )
 
 // ProtobufSerializer implements Serializer interface for protobuf

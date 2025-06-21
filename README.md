@@ -51,6 +51,9 @@ go-serialization-benchmarks/
 │   │   └── runner.go              # ベンチマーク実行ロジック
 │   ├── models/
 │   │   └── test_data.go           # テストデータ構造体
+│   ├── proto/
+│   │   ├── user.proto             # Protocol Buffersスキーマ定義
+│   │   └── user.pb.go             # 生成されたProtocol Buffersコード
 │   ├── redis/
 │   │   └── client.go              # Redis性能測定
 │   ├── reporter/
@@ -66,9 +69,6 @@ go-serialization-benchmarks/
 │       ├── msgp.go                # Msgp実装
 │       ├── msgpack.go             # MsgPack実装
 │       └── protobuf.go            # Protobuf実装
-├── proto/
-│   ├── user.proto                  # Protocol Buffersスキーマ定義
-│   └── user.pb.go                  # 生成されたProtocol Buffersコード
 ├── results/                        # 結果出力先
 ├── go.mod                          # Go モジュール設定
 └── README.md                       # このファイル

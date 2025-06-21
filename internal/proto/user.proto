@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = "github.com/tomotakashimizu/go-serialization-benchmarks/proto";
+option go_package = "github.com/tomotakashimizu/go-serialization-benchmarks/internal/proto";
 
 import "google/protobuf/timestamp.proto";
 
