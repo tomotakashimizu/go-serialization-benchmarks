@@ -14,7 +14,7 @@ func NewMsgpSerializer() *MsgpSerializer {
 
 // Name returns the name of the serializer
 func (m *MsgpSerializer) Name() string {
-	return "msgp"
+	return "Msgp"
 }
 
 // Marshal serializes a User to MessagePack bytes using tinylib/msgp
