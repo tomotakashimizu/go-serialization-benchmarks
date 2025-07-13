@@ -1,85 +1,87 @@
 # Go Serialization Benchmarks
 
-Go 言語における各種シリアライゼーション形式のパフォーマンス比較ツールです。
+[日本語版](./README.ja.md) | English
 
-## 概要
+A performance comparison tool for various serialization formats in Go.
 
-このプロジェクトは、異なるシリアライゼーション形式のパフォーマンスを測定・比較するためのベンチマークツールです。特に以下の用途に適しています：
+## Overview
 
-- アプリケーションに最適なシリアライゼーション形式の選択
-- データ永続化や API 通信における性能最適化
-- Redis キャッシュなどでのシリアライゼーション性能評価
+This project is a benchmark tool for measuring and comparing the performance of different serialization formats. It is particularly useful for:
 
-## 対応シリアライザー
+- Choosing the optimal serialization format for your application
+- Performance optimization in data persistence and API communication
+- Evaluating serialization performance for Redis caching
 
-- **JSON** - Go 標準ライブラリ ([`encoding/json`](https://pkg.go.dev/encoding/json))
+## Supported Serializers
+
+- **JSON** - Go standard library ([`encoding/json`](https://pkg.go.dev/encoding/json))
 - **CBOR** - [`github.com/fxamacker/cbor/v2`](https://github.com/fxamacker/cbor)
-- **EasyJSON** - 高性能 JSON with コード生成 ([`github.com/mailru/easyjson`](https://github.com/mailru/easyjson)) - コード生成による高性能の JSON シリアライザー
-- **FlatBuffers** - ゼロコピーシリアライゼーション ([`github.com/google/flatbuffers`](https://github.com/google/flatbuffers)) - メモリ効率に優れたクロスプラットフォームシリアライゼーション形式
-- **Gob** - Go 標準ライブラリ ([`encoding/gob`](https://pkg.go.dev/encoding/gob))
-- **GoJSON** - 高性能 JSON ([`github.com/goccy/go-json`](https://github.com/goccy/go-json)) - 標準ライブラリの 100%互換高性能版
-- **JSONiter** - 高性能 JSON ([`github.com/json-iterator/go`](https://github.com/json-iterator/go)) - 標準ライブラリの 100%互換高性能版
-- **Msgp** - 高性能 MessagePack with コード生成 ([`github.com/tinylib/msgp`](https://github.com/tinylib/msgp)) - コード生成による高性能の MessagePack シリアライザー
+- **EasyJSON** - High-performance JSON with code generation ([`github.com/mailru/easyjson`](https://github.com/mailru/easyjson)) - Code generation based high-performance JSON serializer
+- **FlatBuffers** - Zero-copy serialization ([`github.com/google/flatbuffers`](https://github.com/google/flatbuffers)) - Memory-efficient cross-platform serialization format
+- **Gob** - Go standard library ([`encoding/gob`](https://pkg.go.dev/encoding/gob))
+- **GoJSON** - High-performance JSON ([`github.com/goccy/go-json`](https://github.com/goccy/go-json)) - 100% compatible high-performance version of the standard library
+- **JSONiter** - High-performance JSON ([`github.com/json-iterator/go`](https://github.com/json-iterator/go)) - 100% compatible high-performance version of the standard library
+- **Msgp** - High-performance MessagePack with code generation ([`github.com/tinylib/msgp`](https://github.com/tinylib/msgp)) - Code generation based high-performance MessagePack serializer
 - **MsgPack** - [`github.com/vmihailenco/msgpack/v5`](https://github.com/vmihailenco/msgpack)
-- **Protobuf** - Google Protocol Buffers ([`google.golang.org/protobuf`](https://pkg.go.dev/google.golang.org/protobuf#section-readme)) - 効率的で言語に依存しないシリアライゼーション形式
+- **Protobuf** - Google Protocol Buffers ([`google.golang.org/protobuf`](https://pkg.go.dev/google.golang.org/protobuf#section-readme)) - Efficient, language-neutral serialization format
 
-## 測定項目
+## Measurements
 
-### 1. シリアライゼーション性能
+### 1. Serialization Performance
 
-- Marshal/Unmarshal 速度（平均値・中央値）
-- シリアライズ後のデータサイズ
+- Marshal/Unmarshal speed (average and median)
+- Serialized data size
 
-### 2. Marshal/Unmarshal の対称性テスト
+### 2. Marshal/Unmarshal Symmetry Tests
 
-- 空スライス/マップの Marshal→Unmarshal 対称性
-- nil スライス/マップの Marshal→Unmarshal 対称性
+- Empty slice/map Marshal→Unmarshal symmetry
+- Nil slice/map Marshal→Unmarshal symmetry
 
-### 3. Redis 性能測定（オプション）
+### 3. Redis Performance Measurements (Optional)
 
-- Redis SET/GET 操作の性能測定
-- 実際のキャッシュ使用シナリオでの評価
+- Redis SET/GET operation performance
+- Evaluation in actual cache usage scenarios
 
-## プロジェクト構造
+## Project Structure
 
 ```plaintext
 go-serialization-benchmarks/
 ├── cmd/
 │   └── benchmark/
-│       └── main.go                 # 実行エントリーポイント
+│       └── main.go                 # Execution entry point
 ├── internal/
 │   ├── benchmark/
-│   │   └── runner.go              # ベンチマーク実行ロジック
+│   │   └── runner.go              # Benchmark execution logic
 │   ├── models/
-│   │   └── test_data.go           # テストデータ構造体
+│   │   └── test_data.go           # Test data structures
 │   ├── flatbuffers/
-│   │   ├── user.fbs               # FlatBuffersスキーマ定義
-│   │   └── generated/             # FlatBuffers生成コード
+│   │   ├── user.fbs               # FlatBuffers schema definition
+│   │   └── generated/             # FlatBuffers generated code
 │   ├── proto/
-│   │   ├── user.proto             # Protocol Buffersスキーマ定義
-│   │   └── user.pb.go             # 生成されたProtocol Buffersコード
+│   │   ├── user.proto             # Protocol Buffers schema definition
+│   │   └── user.pb.go             # Generated Protocol Buffers code
 │   ├── redis/
-│   │   └── client.go              # Redis性能測定
+│   │   └── client.go              # Redis performance measurement
 │   ├── reporter/
-│   │   └── reporter.go            # 結果出力・保存
+│   │   └── reporter.go            # Result output and saving
 │   └── serializers/
-│       ├── serializer.go          # 共通インターフェース
-│       ├── json.go                # JSON実装
-│       ├── cbor.go                # CBOR実装
-│       ├── easyjson.go            # EasyJSON実装
-│       ├── flatbuffers.go         # FlatBuffers実装
-│       ├── gob.go                 # Gob実装
-│       ├── gojson.go              # GoJSON実装
-│       ├── jsoniter.go            # JSONiter実装
-│       ├── msgp.go                # Msgp実装
-│       ├── msgpack.go             # MsgPack実装
-│       └── protobuf.go            # Protobuf実装
-├── results/                        # 結果出力先
-├── go.mod                          # Go モジュール設定
-└── README.md                       # このファイル
+│       ├── serializer.go          # Common interface
+│       ├── json.go                # JSON implementation
+│       ├── cbor.go                # CBOR implementation
+│       ├── easyjson.go            # EasyJSON implementation
+│       ├── flatbuffers.go         # FlatBuffers implementation
+│       ├── gob.go                 # Gob implementation
+│       ├── gojson.go              # GoJSON implementation
+│       ├── jsoniter.go            # JSONiter implementation
+│       ├── msgp.go                # Msgp implementation
+│       ├── msgpack.go             # MsgPack implementation
+│       └── protobuf.go            # Protobuf implementation
+├── results/                        # Result output directory
+├── go.mod                          # Go module configuration
+└── README.md                       # This file
 ```
 
-## インストール
+## Installation
 
 ```bash
 git clone https://github.com/tomotakashimizu/go-serialization-benchmarks.git
@@ -87,53 +89,53 @@ cd go-serialization-benchmarks
 go mod tidy
 ```
 
-## 使用方法
+## Usage
 
-### 基本実行
+### Basic Execution
 
 ```bash
-# デフォルト設定で実行（10万件データ、5回測定）
+# Run with default settings (100,000 records, 5 iterations)
 go run cmd/benchmark/main.go
 
-# レコード数を指定して実行
+# Run with specified number of records
 go run cmd/benchmark/main.go -count=10000
 
-# Redis測定をスキップ
+# Skip Redis measurements
 go run cmd/benchmark/main.go -skip-redis
 
-# ヘルプ表示
+# Show help
 go run cmd/benchmark/main.go -help
 ```
 
-### コマンドライン引数
+### Command Line Arguments
 
-| 引数              | デフォルト     | 説明                     |
-| ----------------- | -------------- | ------------------------ |
-| `-count`          | 100000         | 生成するテストレコード数 |
-| `-iterations`     | 5              | ベンチマーク測定回数     |
-| `-redis-addr`     | localhost:6379 | Redis サーバーアドレス   |
-| `-redis-password` | ""             | Redis パスワード         |
-| `-redis-db`       | 0              | Redis データベース番号   |
-| `-output`         | ./results      | 結果出力ディレクトリ     |
-| `-skip-redis`     | false          | Redis 測定をスキップ     |
-| `-help`           | false          | ヘルプ表示               |
+| Argument          | Default        | Description                 |
+| ----------------- | -------------- | --------------------------- |
+| `-count`          | 100000         | Number of test records      |
+| `-iterations`     | 5              | Number of benchmark runs    |
+| `-redis-addr`     | localhost:6379 | Redis server address        |
+| `-redis-password` | ""             | Redis password              |
+| `-redis-db`       | 0              | Redis database number       |
+| `-output`         | ./results      | Result output directory     |
+| `-skip-redis`     | false          | Skip Redis measurements     |
+| `-help`           | false          | Show help                   |
 
-### 実行例
+### Execution Examples
 
 ```bash
-# 小規模テスト（1万件、Redis無し）
+# Small test (10,000 records, no Redis)
 go run cmd/benchmark/main.go -count=10000 -skip-redis
 
-# カスタムRedis設定での実行
+# Run with custom Redis settings
 go run cmd/benchmark/main.go -redis-addr=192.168.1.100:6379 -redis-password=secret
 
-# 10回測定
+# Run with 10 iterations
 go run cmd/benchmark/main.go -iterations=10
 ```
 
-## テストデータ
+## Test Data
 
-4 層ネスト構造を持つ User モデルを使用：
+Uses a User model with 4-layer nested structure:
 
 ```go
 type User struct {
@@ -142,8 +144,8 @@ type User struct {
     Email     string
     Age       int
     IsActive  bool
-    Profile   Profile                // 2層目
-    Settings  Settings               // 2層目
+    Profile   Profile                // Layer 2
+    Settings  Settings               // Layer 2
     Tags      []string
     Metadata  map[string]interface{}
     CreatedAt time.Time
@@ -154,27 +156,27 @@ type Profile struct {
     LastName    string
     Bio         string
     Avatar      string
-    SocialLinks []Link             // 3層目
-    Preferences Preferences        // 3層目
+    SocialLinks []Link             // Layer 3
+    Preferences Preferences        // Layer 3
 }
 
 type Preferences struct {
     Theme         string
     Language      string
     Notifications map[string]bool
-    Privacy       PrivacySettings  // 4層目
+    Privacy       PrivacySettings  // Layer 4
 }
 ```
 
-複雑なネスト構造により、実際のアプリケーションデータに近い条件でのベンチマークが可能です。
+The complex nested structure enables benchmarking under conditions close to actual application data.
 
-## 結果出力
+## Result Output
 
-### コンソール出力
+### Console Output
 
-実行時に以下の情報がテーブル形式で表示されます：
+The following information is displayed in table format during execution:
 
-#### コマンド実行例
+#### Command Execution Example
 
 ```bash
 go run cmd/benchmark/main.go -count=10000 -skip-redis
@@ -228,23 +230,23 @@ Benchmark completed successfully!
 Results saved to: ./results
 ```
 
-#### 出力内容
+#### Output Contents
 
-1. **シリアライゼーション性能結果**
-   - データサイズ（MB）
-   - Marshal/Unmarshal 速度（平均・中央値）
+1. **Serialization Performance Results**
+   - Data size (MB)
+   - Marshal/Unmarshal speed (average and median)
 
-2. **Marshal/Unmarshal の対称性テスト結果**
-   - 空/nil スライス・マップの型保持確認
-   - ✓: 厳密な型保持、✗: 型変換あり
+2. **Marshal/Unmarshal Symmetry Test Results**
+   - Type preservation for empty/nil slices and maps
+   - ✓: Strict type preservation, ✗: Type conversion occurred
 
-3. **Redis 性能結果**（Redis 測定を行った場合）
-   - SET/GET 操作速度
+3. **Redis Performance Results** (if Redis measurements were performed)
+   - SET/GET operation speed
 
-### ファイル出力
+### File Output
 
-`results/` ディレクトリに以下の CSV ファイルが保存されます：
+The following CSV files are saved in the `results/` directory:
 
-- `serialization_results_YYYYMMDD_HHMMSS.csv` - シリアライゼーション性能
-- `symmetry_results_YYYYMMDD_HHMMSS.csv` - Marshal/Unmarshal の対称性テスト結果
-- `redis_results_YYYYMMDD_HHMMSS.csv` - Redis 性能（実行した場合）
+- `serialization_results_YYYYMMDD_HHMMSS.csv` - Serialization performance
+- `symmetry_results_YYYYMMDD_HHMMSS.csv` - Marshal/Unmarshal symmetry test results
+- `redis_results_YYYYMMDD_HHMMSS.csv` - Redis performance (if executed)
